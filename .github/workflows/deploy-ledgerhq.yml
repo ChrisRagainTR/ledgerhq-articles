@@ -1,0 +1,19 @@
+name: Publish LedgerHQ articles
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/articles/**"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Redeploy LedgerHQ
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: npx -y @railway/cli@latest redeploy --service "LedgerHQ Pro" --yes
